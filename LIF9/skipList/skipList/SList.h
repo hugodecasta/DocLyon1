@@ -1,7 +1,7 @@
 #ifndef SLIST_H
 #define SLIST_H
 
-#define MAX_LVL 5
+#define MAX_LVL 10
 
 typedef struct SCell
 {
@@ -26,5 +26,7 @@ void insertSList(SList& lst,int value);
 SCell* findSList(SList lst,int value);
 
 void deleteSList(SList& lst);
+
+void drawSList(SList lst);
 
 #endif // SLIST_H

@@ -24,8 +24,8 @@ void initSList(SList& lst)
 
 void insertSList(SList& lst,int value)
 {
-    printf("|insert| %i\n",value);
-    printf(".------.\n");
+    //printf("|insert| %i\n",value);
+    /*printf(".------.\n");*/
     SCell* new_cell = newSCell(value);
 
     SCell* actCell = lst.bidon;
@@ -39,62 +39,67 @@ void insertSList(SList& lst,int value)
 
     while(level>=0 && !useThisCell)
     {
-        printf("iter %i at lvl %i\n",actCell->value,level);
+        //printf("iter %i at lvl %i\n",actCell->value,level);
 
         SCell* nextCellOnLevel = actCell->linked[level];
         int nextValueOnLevel = nextCellOnLevel==NULL?-2:nextCellOnLevel->value;
 
         if(actCell->linked[0] == NULL)
         {
-            printf("link 0 of %i is null -> linking\n",actCell->value);
+            //printf("link 0 of %i is null -> linking\n",actCell->value);
             useThisCell = true;
         }
         else if(nextCellOnLevel==NULL || nextValueOnLevel>value)
         {
-            printf("link of %i at lvl %i NULL ",actCell->value,level);
+            /*if(nextCellOnLevel==NULL)
+                printf("link of %i at lvl %i NULL ",actCell->value,level);
+            else
+                printf("link of %i at lvl %i is %i less than %i ",actCell->value,level,nextValueOnLevel,value);*/
             if(level>0)
             {
-                printf("and level > 0 -> level--");
+                //printf("and level > 0 -> level--");
                 navigationStack[level] = actCell;
-                printf("adding %i on stack lvl %i\n",actCell->value,level);
+                //printf("adding %i on stack lvl %i\n",actCell->value,level);
                 level -= 1;
             }
             else
             {
-                printf("and level==0 -> use this cell!\n");
+                //printf("and level==0 -> use this cell!\n");
                 useThisCell = true;
             }
         }
         else
         {
-            printf("next cell %i more little than %i, update currentCell\n",nextValueOnLevel,value);
+            //printf("next cell %i more little than %i, update currentCell\n",nextValueOnLevel,value);
             actCell = nextCellOnLevel;
         }
     }
-    printf("linking %i with %i\n",actCell->value,value);
+    //printf("linking %i with %i\n",actCell->value,value);
     new_cell->linked[0] = actCell->linked[0];
     actCell->linked[0] = new_cell;
 
     if(rand()%100>50)
     {
         int promoteLevel = rand()%(MAX_LVL-1)+1;
-        printf("promote %i on level %i\n",value,promoteLevel);
+        new_cell->level = promoteLevel;
+        //printf("promote %i on level %i\n",value,promoteLevel);
         for(int i=1;i<promoteLevel+1;i++)
         {
-            printf("  last cell linked on lvl %i is %i, ",i,navigationStack[i]->value);
+            //printf("  last cell linked on lvl %i is %i, ",i,navigationStack[i]->value);
             SCell* lastLevelCell = navigationStack[i];
             SCell* nextLevelCell = lastLevelCell->linked[i];
-            if(nextLevelCell==NULL)
+            /*if(nextLevelCell==NULL)
                 printf("and next is NULL\n");
             else
-                printf("and next is %i\n",nextLevelCell->value);
+                printf("and next is %i\n",nextLevelCell->value);*/
 
             new_cell->linked[i] = nextLevelCell;
             lastLevelCell->linked[i] = new_cell;
-            printf("  promote linking done\n");
+            //printf("  link %i on %i for lvl %i\n",lastLevelCell->value,value,i);
         }
         lst.bestLevel = lst.bestLevel<promoteLevel?promoteLevel:lst.bestLevel;
-        printf("  new bestLevel %i\n",lst.bestLevel);
+        lst.bidon->level = lst.bestLevel;
+        //printf("  new bestLevel %i\n",lst.bestLevel);
     }
 }
 
@@ -102,35 +107,39 @@ SCell* findSList(SList lst,int value)
 {
     SCell* currentCell = lst.bidon;
     int level = lst.bestLevel;
+    int iter = 0;
 
     while(level>=0)
     {
-        printf("iter %i at lvl %i\n",currentCell->value,level);
+        ++iter;
+        //printf("iter %i at lvl %i\n",currentCell->value,level);
 
         SCell* nextCellOnLevel = currentCell->linked[level];
         int nextValueOnLevel = nextCellOnLevel==NULL?-2:nextCellOnLevel->value;
 
         if(currentCell->value == value)
         {
-            printf("cell founded !\n");
+                printf("%i iter\n",iter);
+            //printf("cell founded !\n");
             return currentCell;
         }
         else if(nextCellOnLevel==NULL || nextValueOnLevel>value)
         {
             if(level>0)
             {
-                printf("next cell on lvl %i is null -> level--\n",level);
+                //printf("next cell on lvl %i is null -> level--\n",level);
                 level -= 1;
             }
             else
             {
-                printf("nothing else to find...\n",level);
+                printf("%i iter\n",iter);
+                //printf("nothing else to find...\n",level);
                 return NULL;
             }
         }
         else
         {
-            printf("next cell %i more little than %i, update currentCell\n",nextCellOnLevel->value,value);
+            //printf("next cell %i more little than %i, update currentCell\n",nextCellOnLevel->value,value);
             currentCell = nextCellOnLevel;
         }
     }
@@ -139,4 +148,31 @@ SCell* findSList(SList lst,int value)
 void deleteSList(SList& lst)
 {
 
+}
+
+void drawSList(SList lst)
+{
+    for(int i=lst.bestLevel;i>=0;i--)
+    {
+        SCell* actCell = lst.bidon;
+        while(actCell->linked[0]!=NULL)
+        {
+            if(actCell->level>=i)
+            {
+                if(i>0)
+                    printf("-[  ]-");
+                else
+                {
+                    if(actCell->value<10 && actCell->value>=0)
+                        printf("-[0%i]-",actCell->value);
+                    else
+                        printf("-[%i]-",actCell->value);
+                }
+            }
+            else
+                printf("------");
+            actCell = actCell->linked[0];
+        }
+        printf("\n");
+    }
 }
