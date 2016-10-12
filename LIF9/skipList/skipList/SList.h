@@ -21,7 +21,7 @@ typedef struct SList
 
 void initSList(SList& lst);
 
-void insertSList(SList lst,int value);
+void insertSList(SList& lst,int value);
 
 SCell* findSList(SList lst,int value);
 

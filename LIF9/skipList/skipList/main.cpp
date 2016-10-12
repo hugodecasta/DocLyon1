@@ -12,7 +12,7 @@ int main()
     SCell* cell = NULL;
 
     initSList(liste);
-    for(int i=0;i<10000;i++)
+    for(int i=0;i<5;i++)
     {
         insertSList(liste,i);
     }
