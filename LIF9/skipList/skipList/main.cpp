@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <stdio.h>
+#include "SList.h"
 
 using namespace std;
 
@@ -17,7 +19,7 @@ int main()
 
     cell = findSList(liste,15);
     if(cell!=NULL)
-        printf("15 founded !\n"),
+        printf("15 founded !\n");
     else
         printf("15 not in the list...\n");
 

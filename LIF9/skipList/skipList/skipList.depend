@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1476276186 source:u:\mes documents\repo\doclyon1\lif9\skiplist\skiplist\main.cpp
+	<iostream>
+	<string>
+	<stdio.h>
+	"SList.h"
+
+1476276483 u:\mes documents\repo\doclyon1\lif9\skiplist\skiplist\slist.h
+
