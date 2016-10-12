@@ -1,7 +1,7 @@
 #ifndef SLIST_H
 #define SLIST_H
 
-#define MAX_LVL 10
+#define MAX_LVL 5
 
 typedef struct SCell
 {

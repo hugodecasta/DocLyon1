@@ -12,11 +12,13 @@ int main()
     SCell* cell = NULL;
 
     initSList(liste);
-    for(int i=0;i<5;i++)
+    printf("---filling part---\n");
+    for(int i=0;i<20;i+=2)
     {
         insertSList(liste,i);
     }
-
+    insertSList(liste,15);
+    printf("---finding part---\n");
     cell = findSList(liste,15);
     if(cell!=NULL)
         printf("15 founded !\n");
