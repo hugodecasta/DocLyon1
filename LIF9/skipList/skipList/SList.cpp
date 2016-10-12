@@ -155,22 +155,32 @@ void drawSList(SList lst)
     for(int i=lst.bestLevel;i>=0;i--)
     {
         SCell* actCell = lst.bidon;
-        while(actCell->linked[0]!=NULL)
+        SCell* lastNext = NULL;
+        while(actCell!=NULL)
         {
             if(actCell->level>=i)
             {
+                lastNext = actCell->linked[i];
                 if(i>0)
-                    printf("-[  ]-");
+                    printf("-[  ]");
                 else
                 {
                     if(actCell->value<10 && actCell->value>=0)
-                        printf("-[0%i]-",actCell->value);
+                        printf("-[0%i]",actCell->value);
                     else
-                        printf("-[%i]-",actCell->value);
+                        printf("-[%i]",actCell->value);
                 }
             }
             else
-                printf("------");
+            {
+                if(lastNext==NULL)
+                    printf("     ");
+                else
+                {
+                    printf("-----",lastNext->value);
+                }
+
+            }
             actCell = actCell->linked[0];
         }
         printf("\n");

@@ -13,12 +13,12 @@ int main()
 
     initSList(liste);
     printf("---filling part---\n");
-    for(int i=0;i<5;i+=1)
+    for(int i=0;i<48;i+=6)
     {
         insertSList(liste,i);
     }
     printf("---finding part---\n");
-    cell = findSList(liste,8);
+    cell = findSList(liste,48);
     if(cell!=NULL)
         printf("15 founded !\n");
     else
